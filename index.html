@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ايفنت مرسى | Marsa Event — الخبر سيتي ووك</title>
+  <meta name="description" content="ايفنت مرسى: تجربة شتوية تجمع نخبة البراندات المحلية في الخبر سيتي ووك، 29 أكتوبر – 11 نوفمبر. احجز بوثك الآن." />
+  <meta property="og:title" content="ايفنت مرسى — Marsa Event" />
+  <meta property="og:description" content="41 بوث · 14 يوم · +500K مشاهدة متوقعة. الخبر سيتي ووك، 29 أكتوبر – 11 نوفمبر." />
+  <meta name="theme-color" content="#450693" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    // Golden Details palette — Marsa deck + company profile
+    tailwind.config = {
+      theme: { extend: {
+        colors: { gd: {
+          purple: '#450693', midnight: '#2E0275', violet: '#8B00FF',
+          pink: '#FF3E7F', gold: '#FFC303', mint: '#A1ECE4',
+          paper: '#F6F3FB', line: '#E4DCF2', muted: '#6B5B8C',
+        } },
+        fontFamily: { sans: ['Tajawal', 'system-ui', 'sans-serif'] },
+      } },
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .eyebrow { letter-spacing: .3em; }
+    .ltr { direction: ltr; unicode-bidi: isolate; }
+    .num { font-variant-numeric: tabular-nums; }
+    a:focus-visible, button:focus-visible { outline: 3px solid #FFC303; outline-offset: 3px; }
+    /* Latin snippets (numbers, platform names) follow the page side, not their own direction */
+    [dir="rtl"] [data-align] { text-align: right; }
+    [dir="ltr"] [data-align] { text-align: left; }
+    /* English (LTR): mirror the hero shapes to the right so they never sit behind the text */
+    [dir="ltr"] .hero-swoosh { left: auto; right: -7rem; transform: scaleX(-1); }
+    [dir="ltr"] .hero-arc { left: auto; right: 2rem; transform: scaleX(-1); }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body class="bg-white font-sans text-gd-purple antialiased">
+
+  <!-- ================= HEADER ================= -->
+  <header class="sticky top-0 z-30 bg-gd-purple/95 text-white backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <a href="#top" class="shrink-0"><img src="assets/gd-logo-white.png" alt="Golden Details" class="h-11 w-auto sm:h-14" /></a>
+      <nav class="hidden items-center gap-6 text-sm font-bold lg:flex">
+        <a href="#about" class="hover:text-gd-gold" data-en="About">عن الايفنت</a>
+        <a href="#location" class="hover:text-gd-gold" data-en="Location">الموقع والتاريخ</a>
+        <a href="#booths" class="hover:text-gd-gold" data-en="Booths">البوثات</a>
+        <a href="#plan" class="hover:text-gd-gold" data-en="Master plan">المخطط</a>
+        <a href="#prices" class="hover:text-gd-gold" data-en="Prices">الأسعار</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button id="lang-toggle" type="button" class="rounded-full border border-white/40 px-4 py-2 text-sm font-bold hover:border-gd-gold hover:text-gd-gold" aria-label="Switch language">EN</button>
+        <a href="#book" class="rounded-full bg-gd-pink px-5 py-2 text-sm font-bold transition hover:bg-white hover:text-gd-purple" data-en="Book a booth">احجز بوثك</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section id="top" class="relative overflow-hidden bg-gd-purple text-white">
+    <svg class="hero-swoosh pointer-events-none absolute -left-28 top-0 hidden h-full text-gd-pink sm:block sm:w-[20rem] lg:w-[26rem]" viewBox="0 0 300 800" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M150 0 C 95 260, 45 520, 0 800 L 115 800 C 150 530, 205 265, 300 0 Z" fill="currentColor" />
+    </svg>
+    <div class="hero-arc pointer-events-none absolute -bottom-28 left-8 hidden h-72 w-72 rounded-r-full border-[36px] border-l-0 border-gd-gold lg:block" aria-hidden="true"></div>
+
+    <div class="relative mx-auto grid max-w-6xl items-center gap-12 px-4 pb-24 pt-14 sm:px-6 lg:grid-cols-5 lg:pt-20">
+      <div class="lg:col-span-3">
+        <p class="eyebrow text-xs font-medium text-gd-pink sm:text-sm">ALKHOBAR CITY WALK</p>
+        <h1 class="mt-5 text-6xl font-black leading-[1.1] sm:text-7xl lg:text-8xl" data-en="Marsa Event">ايفنت مرسى</h1>
+        <p class="ltr mt-2 text-3xl font-medium text-gd-gold sm:text-4xl" data-hide-en data-align>Marsa Event</p>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/85 sm:text-xl" data-en="A winter experience bringing together the best local brands in the heart of Al Khobar.">تجربة شتوية تجمع نخبة البراندات المحلية في قلب الخبر</p>
+        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xl font-extrabold sm:text-2xl">
+          <span data-en="Oct 29 – Nov 11">29 أكتوبر – 11 نوفمبر</span>
+          <span class="h-7 w-px bg-white/30" aria-hidden="true"></span>
+          <span class="text-gd-gold" data-en="14 days">14 يوم</span>
+        </div>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a href="#book" class="rounded-full bg-gd-pink px-8 py-4 font-bold shadow-lg shadow-gd-pink/30 transition hover:bg-white hover:text-gd-purple" data-en="Book your booth">احجز بوثك</a>
+          <a href="#prices" class="rounded-full border border-white/35 px-8 py-4 font-bold transition hover:border-gd-gold hover:text-gd-gold" data-en="See prices">شوف الأسعار</a>
+        </div>
+      </div>
+      <div class="flex justify-center lg:col-span-2 lg:justify-end">
+        <img src="assets/citywalk.png" alt="Alkhobar City Walk" class="w-64 rounded-3xl shadow-2xl sm:w-80" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STATS ================= -->
+  <section class="border-b border-gd-line bg-white">
+    <div class="mx-auto grid max-w-6xl divide-y divide-gd-line px-4 sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:divide-x-reverse sm:px-6">
+      <div class="py-10 sm:px-8 sm:first:pr-0"><p class="num text-6xl font-black">14</p><p class="mt-2 text-gd-muted" data-en="full days">يوم كامل</p></div>
+      <div class="py-10 sm:px-8"><p class="num text-6xl font-black">41</p><p class="mt-2 text-gd-muted" data-en="exhibition booths">بوث للعرض</p></div>
+      <div class="py-10 sm:px-8"><p class="ltr num text-6xl font-black" data-align data-en="500K+">+500K</p><p class="mt-2 text-gd-muted" data-en="expected views">مشاهدة متوقعة</p></div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about" class="scroll-mt-20 bg-white">
+    <div class="mx-auto grid max-w-6xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-5">
+      <div class="lg:col-span-2">
+        <p class="eyebrow text-xs font-medium text-gd-pink">ABOUT THE EVENT</p>
+        <h2 class="mt-3 text-4xl font-black sm:text-5xl" data-en="About Marsa">عن ايفنت مرسى</h2>
+      </div>
+      <div class="space-y-6 lg:col-span-3">
+        <p class="text-xl font-bold leading-loose sm:text-2xl" data-en="Marsa Event is a distinctive winter experience bringing together a selection of local brands in a warm atmosphere that reflects the beauty of the winter season, where shopping and entertainment meet in one modern space.">يُعدّ «ايفنت مرسى» تجربة شتوية مميّزة تجمع نخبة من البراندات المحلية في أجواء دافئة تعكس جمال موسم الشتاء، حيث يلتقي التسوق والترفيه في مساحة واحدة بروح عصرية.</p>
+        <p class="text-lg leading-loose text-gd-muted" data-en="The event aims to support local brands and create a winter destination where visitors enjoy a complete experience of shopping, food and side activities in a special winter setting.">يهدف الحدث إلى دعم العلامات المحلية وخلق وجهة شتوية تجمع الزوار للاستمتاع بتجربة متكاملة من التسوق والمأكولات والأنشطة المصاحبة وسط أجواء شتوية مميزة.</p>
+        <p class="flex items-center gap-4 text-lg font-extrabold"><span class="h-1 w-14 bg-gd-pink" aria-hidden="true"></span><span data-en="A complete winter destination in the heart of Al Khobar City Walk">وجهة شتوية متكاملة في قلب الخبر سيتي ووك</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LOCATION & DATE ================= -->
+  <section id="location" class="scroll-mt-20 bg-gd-paper">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="eyebrow text-xs font-medium text-gd-pink">LOCATION &amp; DATE</p>
+      <h2 class="mt-3 text-4xl font-black sm:text-5xl" data-en="Location &amp; date">الموقع والتاريخ</h2>
+      <div class="mt-10 grid gap-5 md:grid-cols-3">
+        <div class="rounded-3xl bg-white p-8">
+          <p class="text-sm font-extrabold tracking-wider text-gd-pink" data-en="LOCATION">الموقع</p>
+          <p class="mt-4 text-3xl font-black" data-en="Al Khobar City Walk">الخبر سيتي ووك</p>
+          <p class="mt-2 text-gd-muted" data-en="Al Khobar – Eastern Province">الخبر – المنطقة الشرقية</p>
+        </div>
+        <div class="rounded-3xl bg-gd-purple p-8 text-white">
+          <p class="text-sm font-extrabold tracking-wider text-gd-gold" data-en="DATES">التاريخ</p>
+          <p class="mt-4 text-3xl font-black" data-en="Oct 29 – Nov 11">29 أكتوبر – 11 نوفمبر</p>
+          <p class="mt-2 text-white/75" data-en="Winter season">موسم الشتاء</p>
+        </div>
+        <div class="rounded-3xl bg-white p-8">
+          <p class="text-sm font-extrabold tracking-wider text-gd-pink" data-en="DURATION">المدة</p>
+          <p class="mt-4 text-3xl font-black" data-en="14 consecutive days">14 يوم متواصل</p>
+          <p class="mt-2 text-gd-muted" data-en="Daily throughout the event">يومياً طوال فترة الحدث</p>
+        </div>
+      </div>
+      <a href="https://maps.app.goo.gl/BZtb7ZVqfrQRoTLu7" target="_blank" rel="noopener" class="mt-8 inline-flex items-center gap-3 rounded-full border-2 border-gd-purple px-7 py-3 font-extrabold transition hover:bg-gd-purple hover:text-white">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        <span data-en="Open in Google Maps">عرض الموقع على خرائط قوقل</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= SOCIAL MEDIA ================= -->
+  <section class="bg-gd-purple text-white">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="eyebrow text-xs font-medium text-gd-pink">SOCIAL MEDIA</p>
+      <div class="mt-3 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <h2 class="text-4xl font-black sm:text-5xl" data-en="Social media reach">السوشل ميديا</h2>
+        <div class="lg:text-left">
+          <p class="ltr num text-6xl font-black text-gd-gold sm:text-8xl" data-align data-en="500,000+">+500,000</p>
+          <p class="mt-2 max-w-md text-white/80" data-en="expected views of event coverage through a network of Eastern Province influencers">مشاهدة متوقعة لتغطيات الايفنت عبر شبكة من المؤثرين في المنطقة الشرقية</p>
+        </div>
+      </div>
+      <div class="mt-12 grid gap-5 md:grid-cols-3">
+        <div class="rounded-3xl border border-white/15 bg-white/5 p-8"><p class="ltr text-3xl font-black" data-align>TikTok</p><div class="my-4 h-1 w-12 bg-gd-pink"></div><p class="text-white/80" data-en="Daily coverage from influencers specialised in entertainment and shopping">تغطيات يومية من مؤثرين متخصصين في الترفيه والتسوق</p></div>
+        <div class="rounded-3xl border border-white/15 bg-white/5 p-8"><p class="ltr text-3xl font-black" data-align>Instagram</p><div class="my-4 h-1 w-12 bg-gd-pink"></div><p class="text-white/80" data-en="Repeated reels and stories throughout the event">ريلز وستوريز متكررة خلال كامل مدة الايفنت</p></div>
+        <div class="rounded-3xl border border-white/15 bg-white/5 p-8"><p class="ltr text-3xl font-black" data-align>Snapchat</p><div class="my-4 h-1 w-12 bg-gd-pink"></div><p class="text-white/80" data-en="Live coverage of visitors and side activities">تغطية لحظية للزوار والأنشطة المصاحبة</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= THEME + BOOTHS ================= -->
+  <section id="booths" class="scroll-mt-20 bg-white">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <div class="grid items-center gap-12 lg:grid-cols-2">
+        <div>
+          <p class="eyebrow text-xs font-medium text-gd-pink">EVENT THEME</p>
+          <h2 class="mt-3 text-4xl font-black sm:text-5xl" data-en="Event theme">هوية الايفنت</h2>
+          <p class="mt-6 text-xl font-bold leading-loose" data-en="Booths are designed with the finest detail, in a modern, consistent identity that combines elegance and simplicity.">تم تصميم البوثات وفق أدق وأفضل التفاصيل، بهوية عصرية متناسقة تجمع بين الأناقة والبساطة.</p>
+          <p class="mt-4 leading-loose text-gd-muted" data-en="A distinctive visual experience that reflects the spirit of the event and presents participating brands at their best, in harmony with the winter atmosphere of the venue.">تجربة بصرية مميزة تعكس روح الفعالية وتُبرز البراندات المشاركة بأفضل صورة، مع الحرص على انسجام التصميم العام مع الأجواء الشتوية للمكان.</p>
+          <p class="ltr eyebrow mt-6 text-xs font-medium text-gd-pink" data-align>GOLDEN DETAILS PRODUCTION</p>
+        </div>
+        <img src="assets/booth-2.jpg" alt="Marsa booth design" class="w-full rounded-3xl shadow-xl" />
+      </div>
+
+      <div class="mt-20 grid items-center gap-12 lg:grid-cols-2">
+        <img src="assets/booth.jpg" alt="Marsa booth 2×2 m" class="order-2 w-full rounded-3xl shadow-xl lg:order-1" />
+        <div class="order-1 lg:order-2">
+          <p class="eyebrow text-xs font-medium text-gd-pink">BOOTHS DESIGN</p>
+          <h2 class="mt-3 text-4xl font-black sm:text-5xl" data-en="Booth design">تصميم البوثات</h2>
+          <p class="mt-6 text-lg leading-loose text-gd-muted" data-en="Each booth offers a practical 2 × 2 m footprint and a height of 3 m, giving strong visual presence and an ideal space to display products attractively and comfortably.">يأتي البوث بمساحة عملية تبلغ 2 × 2 متر وبارتفاع 3 متر، ما يوفر حضوراً بصرياً مميزاً ومساحة مثالية لعرض المنتجات بشكل جذاب ومريح.</p>
+          <dl class="mt-8 divide-y divide-gd-line border-y border-gd-line">
+            <div class="flex items-center justify-between py-4"><dt class="text-gd-muted" data-en="Booth size">مساحة البوث</dt><dd class="text-2xl font-black" data-en="2 × 2 m">2 × 2 م</dd></div>
+            <div class="flex items-center justify-between py-4"><dt class="text-gd-muted" data-en="Height">الارتفاع</dt><dd class="text-2xl font-black" data-en="3 m">3 م</dd></div>
+            <div class="flex items-center justify-between py-4"><dt class="text-gd-muted" data-en="Total booths">إجمالي البوثات</dt><dd class="num text-2xl font-black">41</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MASTER PLAN ================= -->
+  <section id="plan" class="scroll-mt-20 bg-gd-paper">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="eyebrow text-xs font-medium text-gd-pink">MASTER PLAN</p>
+      <h2 class="mt-3 text-4xl font-black sm:text-5xl" data-en="Master plan">المخطط العام</h2>
+      <div class="mt-10 grid gap-8 lg:grid-cols-3">
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center justify-between rounded-3xl bg-gd-purple px-7 py-6 text-white"><span data-en="Total booths">إجمالي البوثات</span><span class="num text-5xl font-black">41</span></div>
+          <div class="flex items-center justify-between rounded-3xl bg-white px-7 py-5"><span class="text-gd-muted" data-en="Y booths">بوث <span class="ltr">Y</span></span><span class="num text-4xl font-black">25</span></div>
+          <div class="flex items-center justify-between rounded-3xl bg-white px-7 py-5"><span class="text-gd-muted" data-en="Z booths">بوث <span class="ltr">Z</span></span><span class="num text-4xl font-black">12</span></div>
+          <div class="flex items-center justify-between rounded-3xl bg-white px-7 py-5 ring-2 ring-gd-gold"><span class="text-gd-muted" data-en="VIP booths">بوث <span class="ltr">VIP</span></span><span class="num text-4xl font-black">4</span></div>
+          <p class="text-sm leading-relaxed text-gd-muted" data-en="Booths are spread along the walkways of Al Khobar City Walk — the main entrance is on the left of the plan.">توزيع البوثات داخل ممرات الخبر سيتي ووك — المدخل الرئيسي على يسار المخطط.</p>
+        </div>
+        <div class="overflow-hidden rounded-3xl border border-gd-line bg-white p-3 lg:col-span-2">
+          <img src="assets/masterplan.png" alt="Marsa Event master plan" class="mx-auto w-full max-w-2xl" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRICES ================= -->
+  <section id="prices" class="scroll-mt-20 bg-white">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="eyebrow text-xs font-medium text-gd-pink">RENTAL PRICES</p>
+      <h2 class="mt-3 text-4xl font-black sm:text-5xl" data-en="Rental prices">الأسعار التأجيرية</h2>
+      <div class="mt-10 grid gap-5 md:grid-cols-3">
+        <div class="rounded-3xl bg-gd-purple p-8 text-white ring-4 ring-gd-gold">
+          <p class="ltr text-3xl font-black text-gd-gold" data-align>VIP</p>
+          <p class="mt-1 text-white/75" data-en="Premium booths">البوثات المميزة</p>
+          <p class="num mt-10 text-6xl font-black">8,500</p>
+          <p class="mt-2 text-white/75" data-en="SAR / full period">ريال / كامل المدة</p>
+        </div>
+        <div class="rounded-3xl bg-gd-paper p-8">
+          <p class="ltr text-3xl font-black" data-align>Y1,25 – Z1,7</p>
+          <p class="mt-1 text-gd-muted" data-en="First tier">الفئة الأولى</p>
+          <p class="num mt-10 text-6xl font-black">7,500</p>
+          <p class="mt-2 text-gd-muted" data-en="SAR / full period">ريال / كامل المدة</p>
+        </div>
+        <div class="rounded-3xl bg-gd-paper p-8">
+          <p class="text-3xl font-black" data-en="All other booths">باقي البوثات</p>
+          <p class="mt-1 text-gd-muted" data-en="Standard tier">الفئة القياسية</p>
+          <p class="num mt-10 text-6xl font-black">5,000</p>
+          <p class="mt-2 text-gd-muted" data-en="SAR / full period">ريال / كامل المدة</p>
+        </div>
+      </div>
+      <p class="mt-6 text-sm text-gd-muted" data-en="Prices include the fully equipped booth for the whole event (14 days), in Saudi Riyals, excluding VAT.">الأسعار شاملة البوث المجهّز لكامل مدة الايفنت (14 يوم) — بالريال السعودي وغير شاملة ضريبة القيمة المضافة.</p>
+    </div>
+  </section>
+
+  <!-- ================= BOOK ================= -->
+  <section id="book" class="relative scroll-mt-20 overflow-hidden bg-gd-midnight text-white">
+    <svg class="pointer-events-none absolute inset-x-0 bottom-0 h-24 w-full text-gd-pink" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 110 C 400 60, 1000 70, 1440 20 L1440 70 C 1000 120, 400 110, 0 120 Z" fill="currentColor" />
+    </svg>
+    <div class="relative mx-auto max-w-6xl px-4 pb-32 pt-20 sm:px-6">
+      <p class="eyebrow text-xs font-medium text-gd-pink">BOOK A BOOTH</p>
+      <h2 class="mt-3 text-4xl font-black sm:text-5xl" data-en="Book your booth by email">احجز بوثك عبر الإيميل</h2>
+      <p class="mt-4 max-w-2xl text-white/75" data-en="Send us the details below and our team will contact you to confirm your booth. Booths are allocated first come, first served.">أرسل لنا التفاصيل التالية وبيتواصل معك فريقنا لتأكيد البوث — الأولوية حسب أسبقية الحجز.</p>
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <li class="rounded-3xl border border-white/15 bg-white/5 p-6"><p class="text-lg font-bold" data-en="Brand profile">بروفايل البراند</p><p class="mt-1 text-sm text-white/65" data-en="PDF or product photos">ملف PDF أو صور للمنتجات</p></li>
+        <li class="rounded-3xl border border-white/15 bg-white/5 p-6"><p class="text-lg font-bold" data-en="Brand name &amp; Instagram">اسم البراند وحساب الانستقرام</p><p class="mt-1 text-sm text-white/65" data-en="or any brand social account">أو أي حساب تواصل للبراند</p></li>
+        <li class="rounded-3xl border border-white/15 bg-white/5 p-6"><p class="text-lg font-bold" data-en="Product type">نوع المنتج</p><p class="mt-1 text-sm text-white/65" data-en="Fashion, food, accessories…">أزياء، أكل، إكسسوارات…</p></li>
+        <li class="rounded-3xl border border-white/15 bg-white/5 p-6"><p class="text-lg font-bold" data-en="Preferred booth tier">فئة البوث المفضلة</p><p class="mt-1 text-sm text-white/65" data-en="VIP · First tier · Standard">VIP · الفئة الأولى · القياسية</p></li>
+      </ul>
+      <div class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <a href="mailto:infogoldendetails@gmail.com?subject=%D8%AD%D8%AC%D8%B2%20%D8%A8%D9%88%D8%AB%20-%20%D8%A7%D9%8A%D9%81%D9%86%D8%AA%20%D9%85%D8%B1%D8%B3%D9%89" class="rounded-full bg-gd-gold px-9 py-4 text-lg font-extrabold text-gd-purple transition hover:bg-white" data-en="Email us to book">أرسل طلب الحجز</a>
+        <span id="gd-email" class="ltr select-all text-xl font-bold text-gd-gold">infogoldendetails@gmail.com</span>
+        <button id="copy-email" type="button" class="rounded-full border border-white/30 px-5 py-2 text-sm font-bold transition hover:border-gd-gold hover:text-gd-gold" data-en="Copy email">نسخ الإيميل</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-gd-midnight text-white/60">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 border-t border-white/10 px-4 py-8 text-sm sm:flex-row sm:px-6">
+      <img src="assets/gd-logo-white.png" alt="Golden Details" class="h-10 w-auto" />
+      <p data-en="Organised &amp; produced by Golden Details · Al Khobar City Walk · Oct 29 – Nov 11">تنظيم وإنتاج Golden Details · الخبر سيتي ووك · 29 أكتوبر – 11 نوفمبر</p>
+    </div>
+  </footer>
+
+  <script>
+    // ---- Arabic / English toggle (Arabic is the source text; English lives in data-en) ----
+    (function () {
+      var nodes = document.querySelectorAll('[data-en]');
+      nodes.forEach(function (el) { el.setAttribute('data-ar', el.innerHTML); });
+      var btn = document.getElementById('lang-toggle');
+      function apply(lang) {
+        var en = lang === 'en';
+        document.documentElement.lang = en ? 'en' : 'ar';
+        document.documentElement.dir = en ? 'ltr' : 'rtl';
+        nodes.forEach(function (el) { el.innerHTML = el.getAttribute(en ? 'data-en' : 'data-ar'); });
+        document.querySelectorAll('[data-hide-en]').forEach(function (el) { el.hidden = en; });
+        btn.textContent = en ? 'ع' : 'EN';
+        document.title = en ? 'Marsa Event | Al Khobar City Walk' : 'ايفنت مرسى | Marsa Event — الخبر سيتي ووك';
+        try { localStorage.setItem('marsa-lang', lang); } catch (e) {}
+      }
+      var start = 'ar';
+      try { start = localStorage.getItem('marsa-lang') || 'ar'; } catch (e) {}
+      if (/[?&]lang=en/.test(location.search) || location.hash === '#en') start = 'en';
+      if (start === 'en') apply('en');
+      btn.addEventListener('click', function () { apply(document.documentElement.lang === 'en' ? 'ar' : 'en'); });
+    })();
+
+    // ---- copy email ----
+    document.getElementById('copy-email').addEventListener('click', function () {
+      var btn = this, el = document.getElementById('gd-email'), label = btn.innerHTML;
+      function done() { btn.textContent = document.documentElement.lang === 'en' ? 'Copied' : 'تم النسخ'; setTimeout(function () { btn.innerHTML = label; }, 1800); }
+      function fallback() { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+      try { navigator.clipboard.writeText(el.textContent.trim()).then(done, fallback); } catch (e) { fallback(); }
+    });
+  </script>
+</body>
+</html>
