@@ -36,6 +36,15 @@
     /* English (LTR): mirror the hero shapes to the right so they never sit behind the text */
     [dir="ltr"] .hero-swoosh { left: auto; right: -7rem; transform: scaleX(-1); }
     [dir="ltr"] .hero-arc { left: auto; right: 2rem; transform: scaleX(-1); }
+    /* booth map */
+    #booth-map .booth { cursor: pointer; outline: none; }
+    #booth-map .booth rect { fill: var(--c, #8B00FF); stroke: #2E0275; stroke-width: 1.2; transition: transform .15s, filter .15s; transform-box: fill-box; transform-origin: center; }
+    #booth-map .booth text { fill: var(--t, #fff); font-weight: 800; text-anchor: middle; dominant-baseline: central; pointer-events: none; font-family: Tajawal, sans-serif; }
+    #booth-map .booth:hover rect, #booth-map .booth:focus-visible rect { transform: scale(1.18); filter: drop-shadow(0 2px 3px rgba(46,2,117,.45)); }
+    #booth-map .booth.is-selected rect { stroke: #FFC303; stroke-width: 3; transform: scale(1.22); }
+    #booth-map .booth.is-pending { cursor: not-allowed; --c: #F59E0B; --t: #fff; }
+    #booth-map .booth.is-booked { cursor: not-allowed; --c: #B9B3C7; --t: #6B5B8C; }
+    #booth-map .map-label { font-size: 9px; font-weight: 800; fill: #2E0275; letter-spacing: .05em; font-family: Tajawal, sans-serif; }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   </style>
 </head>
@@ -239,26 +248,92 @@
     </div>
   </section>
 
-  <!-- ================= BOOK ================= -->
-  <section id="book" class="relative scroll-mt-20 overflow-hidden bg-gd-midnight text-white">
-    <svg class="pointer-events-none absolute inset-x-0 bottom-0 h-24 w-full text-gd-pink" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0 110 C 400 60, 1000 70, 1440 20 L1440 70 C 1000 120, 400 110, 0 120 Z" fill="currentColor" />
-    </svg>
-    <div class="relative mx-auto max-w-6xl px-4 pb-32 pt-20 sm:px-6">
-      <p class="eyebrow text-xs font-medium text-gd-pink">BOOK A BOOTH</p>
-      <h2 class="mt-3 text-4xl font-black sm:text-5xl" data-en="Book your booth by email">احجز بوثك عبر الإيميل</h2>
-      <p class="mt-4 max-w-2xl text-white/75" data-en="Send us the details below and our team will contact you to confirm your booth. Booths are allocated first come, first served.">أرسل لنا التفاصيل التالية وبيتواصل معك فريقنا لتأكيد البوث — الأولوية حسب أسبقية الحجز.</p>
-      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <li class="rounded-3xl border border-white/15 bg-white/5 p-6"><p class="text-lg font-bold" data-en="Brand profile">بروفايل البراند</p><p class="mt-1 text-sm text-white/65" data-en="PDF or product photos">ملف PDF أو صور للمنتجات</p></li>
-        <li class="rounded-3xl border border-white/15 bg-white/5 p-6"><p class="text-lg font-bold" data-en="Brand name &amp; Instagram">اسم البراند وحساب الانستقرام</p><p class="mt-1 text-sm text-white/65" data-en="or any brand social account">أو أي حساب تواصل للبراند</p></li>
-        <li class="rounded-3xl border border-white/15 bg-white/5 p-6"><p class="text-lg font-bold" data-en="Product type">نوع المنتج</p><p class="mt-1 text-sm text-white/65" data-en="Fashion, food, accessories…">أزياء، أكل، إكسسوارات…</p></li>
-        <li class="rounded-3xl border border-white/15 bg-white/5 p-6"><p class="text-lg font-bold" data-en="Preferred booth tier">فئة البوث المفضلة</p><p class="mt-1 text-sm text-white/65" data-en="VIP · First tier · Standard">VIP · الفئة الأولى · القياسية</p></li>
-      </ul>
-      <div class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-        <a href="mailto:infogoldendetails@gmail.com?subject=%D8%AD%D8%AC%D8%B2%20%D8%A8%D9%88%D8%AB%20-%20%D8%A7%D9%8A%D9%81%D9%86%D8%AA%20%D9%85%D8%B1%D8%B3%D9%89" class="rounded-full bg-gd-gold px-9 py-4 text-lg font-extrabold text-gd-purple transition hover:bg-white" data-en="Email us to book">أرسل طلب الحجز</a>
-        <span id="gd-email" class="ltr select-all text-xl font-bold text-gd-gold">infogoldendetails@gmail.com</span>
-        <button id="copy-email" type="button" class="rounded-full border border-white/30 px-5 py-2 text-sm font-bold transition hover:border-gd-gold hover:text-gd-gold" data-en="Copy email">نسخ الإيميل</button>
+  <!-- ================= BOOK (interactive booth map) ================= -->
+  <section id="book" class="scroll-mt-20 bg-gd-paper">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <p class="eyebrow text-xs font-medium text-gd-pink">BOOK YOUR BOOTH</p>
+      <div class="mt-3 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <h2 class="text-4xl font-black sm:text-5xl" data-en="Pick your booth on the map">اختر بوثك من المخطط</h2>
+          <p class="mt-3 max-w-2xl text-gd-muted" data-en="Tap the booth you want, fill in your details and your request reaches us instantly. Bookings are provisional until our team contacts you to confirm.">اضغط على البوث اللي يناسبك، عبّ بياناتك، ويوصلنا طلبك على طول. الحجز مبدئي ويتأكد بعد ما يتواصل معك فريقنا.</p>
+        </div>
+        <p class="inline-flex shrink-0 items-center gap-2 self-start rounded-full bg-gd-purple px-5 py-3 text-white lg:self-auto">
+          <span class="relative flex h-2.5 w-2.5"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-gd-pink opacity-75"></span><span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-gd-pink"></span></span>
+          <span id="left-label"></span>
+        </p>
       </div>
+
+      <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold" aria-label="Legend">
+        <li class="flex items-center gap-2"><span class="h-4 w-4 rounded bg-gd-gold"></span><span data-en="VIP · 8,500 SAR">VIP · 8,500 ريال</span></li>
+        <li class="flex items-center gap-2"><span class="h-4 w-4 rounded bg-gd-pink"></span><span data-en="First tier · 7,500 SAR">الفئة الأولى · 7,500 ريال</span></li>
+        <li class="flex items-center gap-2"><span class="h-4 w-4 rounded bg-gd-violet"></span><span data-en="Standard · 5,000 SAR">القياسية · 5,000 ريال</span></li>
+        <li class="flex items-center gap-2"><span class="h-4 w-4 rounded" style="background:#F59E0B"></span><span data-en="Under review">قيد المراجعة</span></li>
+        <li class="flex items-center gap-2"><span class="h-4 w-4 rounded" style="background:#B9B3C7"></span><span data-en="Booked">محجوز</span></li>
+      </ul>
+
+      <div class="mt-6 grid gap-6 lg:grid-cols-5">
+        <div class="min-w-0 lg:col-span-3">
+          <p class="mb-2 text-xs font-bold text-gd-muted sm:hidden" data-en="Swipe the map sideways to see all booths ↔">اسحب المخطط يمين ويسار عشان تشوف كل البوثات ↔</p>
+          <div id="map-scroll" dir="ltr" class="overflow-x-auto rounded-3xl border border-gd-line bg-white p-2">
+          <svg id="booth-map" viewBox="300 160 490 500" class="block h-auto w-full min-w-[640px] sm:min-w-[560px]" role="group" aria-label="Booth map">
+            <image href="assets/masterplan.png" x="0" y="0" width="838" height="717" opacity=".55" />
+            <rect x="393" y="634" width="28" height="30" fill="#fff" />
+            <text x="352" y="520" class="map-label" transform="rotate(-90 352 520)" data-en-svg="Main entrance">المدخل الرئيسي</text>
+            <g class="booth" data-id="Y1" tabindex="0" role="button" aria-label="Y1"><rect x="441" y="329" width="20" height="20" rx="3"/><text x="451.0" y="339.0" font-size="7.5">Y1</text></g><g class="booth" data-id="Y2" tabindex="0" role="button" aria-label="Y2"><rect x="453" y="353" width="20" height="20" rx="3"/><text x="463.0" y="363.0" font-size="7.5">Y2</text></g><g class="booth" data-id="Y3" tabindex="0" role="button" aria-label="Y3"><rect x="423" y="350" width="20" height="19" rx="3"/><text x="433.0" y="359.5" font-size="7.5">Y3</text></g><g class="booth" data-id="Y4" tabindex="0" role="button" aria-label="Y4"><rect x="450" y="377" width="20" height="20" rx="3"/><text x="460.0" y="387.0" font-size="7.5">Y4</text></g><g class="booth" data-id="Y5" tabindex="0" role="button" aria-label="Y5"><rect x="420" y="373" width="21" height="20" rx="3"/><text x="430.5" y="383.0" font-size="7.5">Y5</text></g><g class="booth" data-id="Y6" tabindex="0" role="button" aria-label="Y6"><rect x="447" y="400" width="20" height="20" rx="3"/><text x="457.0" y="410.0" font-size="7.5">Y6</text></g><g class="booth" data-id="Y7" tabindex="0" role="button" aria-label="Y7"><rect x="417" y="396" width="21" height="20" rx="3"/><text x="427.5" y="406.0" font-size="7.5">Y7</text></g><g class="booth" data-id="Y8" tabindex="0" role="button" aria-label="Y8"><rect x="445" y="423" width="19" height="20" rx="3"/><text x="454.5" y="433.0" font-size="7.5">Y8</text></g><g class="booth" data-id="Y9" tabindex="0" role="button" aria-label="Y9"><rect x="415" y="419" width="20" height="20" rx="3"/><text x="425.0" y="429.0" font-size="7.5">Y9</text></g><g class="booth" data-id="Y10" tabindex="0" role="button" aria-label="Y10"><rect x="441" y="446" width="20" height="21" rx="3"/><text x="451.0" y="456.5" font-size="7.5">Y10</text></g><g class="booth" data-id="Y11" tabindex="0" role="button" aria-label="Y11"><rect x="411" y="442" width="20" height="20" rx="3"/><text x="421.0" y="452.0" font-size="7.5">Y11</text></g><g class="booth" data-id="Y12" tabindex="0" role="button" aria-label="Y12"><rect x="438" y="469" width="19" height="20" rx="3"/><text x="447.5" y="479.0" font-size="7.5">Y12</text></g><g class="booth" data-id="Y13" tabindex="0" role="button" aria-label="Y13"><rect x="408" y="465" width="20" height="20" rx="3"/><text x="418.0" y="475.0" font-size="7.5">Y13</text></g><g class="booth" data-id="Y14" tabindex="0" role="button" aria-label="Y14"><rect x="434" y="492" width="20" height="22" rx="3"/><text x="444.0" y="503.0" font-size="7.5">Y14</text></g><g class="booth" data-id="Y15" tabindex="0" role="button" aria-label="Y15"><rect x="404" y="491" width="20" height="19" rx="3"/><text x="414.0" y="500.5" font-size="7.5">Y15</text></g><g class="booth" data-id="Y16" tabindex="0" role="button" aria-label="Y16"><rect x="431" y="519" width="20" height="20" rx="3"/><text x="441.0" y="529.0" font-size="7.5">Y16</text></g><g class="booth" data-id="Y17" tabindex="0" role="button" aria-label="Y17"><rect x="400" y="515" width="21" height="20" rx="3"/><text x="410.5" y="525.0" font-size="7.5">Y17</text></g><g class="booth" data-id="Y18" tabindex="0" role="button" aria-label="Y18"><rect x="427" y="544" width="20" height="20" rx="3"/><text x="437.0" y="554.0" font-size="7.5">Y18</text></g><g class="booth" data-id="Y19" tabindex="0" role="button" aria-label="Y19"><rect x="397" y="540" width="20" height="20" rx="3"/><text x="407.0" y="550.0" font-size="7.5">Y19</text></g><g class="booth" data-id="Y20" tabindex="0" role="button" aria-label="Y20"><rect x="424" y="568" width="20" height="20" rx="3"/><text x="434.0" y="578.0" font-size="7.5">Y20</text></g><g class="booth" data-id="Y21" tabindex="0" role="button" aria-label="Y21"><rect x="393" y="565" width="20" height="19" rx="3"/><text x="403.0" y="574.5" font-size="7.5">Y21</text></g><g class="booth" data-id="Y22" tabindex="0" role="button" aria-label="Y22"><rect x="420" y="594" width="20" height="19" rx="3"/><text x="430.0" y="603.5" font-size="7.5">Y22</text></g><g class="booth" data-id="Y23" tabindex="0" role="button" aria-label="Y23"><rect x="390" y="590" width="21" height="20" rx="3"/><text x="400.5" y="600.0" font-size="7.5">Y23</text></g><g class="booth" data-id="Y24" tabindex="0" role="button" aria-label="Y24"><rect x="417" y="618" width="20" height="20" rx="3"/><text x="427.0" y="628.0" font-size="7.5">Y24</text></g><g class="booth" data-id="Y25" tabindex="0" role="button" aria-label="Y25"><rect x="386" y="614" width="21" height="20" rx="3"/><text x="396.5" y="624.0" font-size="7.5">Y25</text></g><g class="booth" data-id="Z1" tabindex="0" role="button" aria-label="Z1"><rect x="598" y="193" width="18" height="19" rx="3"/><text x="607.0" y="202.5" font-size="7.5">Z1</text></g><g class="booth" data-id="Z2" tabindex="0" role="button" aria-label="Z2"><rect x="625" y="194" width="18" height="18" rx="3"/><text x="634.0" y="203.0" font-size="7.5">Z2</text></g><g class="booth" data-id="Z3" tabindex="0" role="button" aria-label="Z3"><rect x="652" y="193" width="18" height="19" rx="3"/><text x="661.0" y="202.5" font-size="7.5">Z3</text></g><g class="booth" data-id="Z4" tabindex="0" role="button" aria-label="Z4"><rect x="679" y="193" width="18" height="19" rx="3"/><text x="688.0" y="202.5" font-size="7.5">Z4</text></g><g class="booth" data-id="Z5" tabindex="0" role="button" aria-label="Z5"><rect x="706" y="193" width="17" height="19" rx="3"/><text x="714.5" y="202.5" font-size="7.5">Z5</text></g><g class="booth" data-id="Z6" tabindex="0" role="button" aria-label="Z6"><rect x="732" y="193" width="18" height="19" rx="3"/><text x="741.0" y="202.5" font-size="7.5">Z6</text></g><g class="booth" data-id="Z7" tabindex="0" role="button" aria-label="Z7"><rect x="598" y="219" width="18" height="19" rx="3"/><text x="607.0" y="228.5" font-size="7.5">Z7</text></g><g class="booth" data-id="Z8" tabindex="0" role="button" aria-label="Z8"><rect x="625" y="219" width="18" height="19" rx="3"/><text x="634.0" y="228.5" font-size="7.5">Z8</text></g><g class="booth" data-id="Z9" tabindex="0" role="button" aria-label="Z9"><rect x="652" y="219" width="18" height="19" rx="3"/><text x="661.0" y="228.5" font-size="7.5">Z9</text></g><g class="booth" data-id="Z10" tabindex="0" role="button" aria-label="Z10"><rect x="679" y="219" width="18" height="19" rx="3"/><text x="688.0" y="228.5" font-size="7.5">Z10</text></g><g class="booth" data-id="Z11" tabindex="0" role="button" aria-label="Z11"><rect x="706" y="219" width="17" height="19" rx="3"/><text x="714.5" y="228.5" font-size="7.5">Z11</text></g><g class="booth" data-id="Z12" tabindex="0" role="button" aria-label="Z12"><rect x="732" y="219" width="18" height="20" rx="3"/><text x="741.0" y="229.0" font-size="7.5">Z12</text></g><g class="booth" data-id="VIP1" tabindex="0" role="button" aria-label="VIP1"><rect x="333" y="202" width="19" height="18" rx="3"/><text x="342.5" y="211.0" font-size="6">VIP1</text></g><g class="booth" data-id="VIP2" tabindex="0" role="button" aria-label="VIP2"><rect x="334" y="225" width="18" height="18" rx="3"/><text x="343.0" y="234.0" font-size="6">VIP2</text></g><g class="booth" data-id="VIP3" tabindex="0" role="button" aria-label="VIP3"><rect x="333" y="249" width="19" height="18" rx="3"/><text x="342.5" y="258.0" font-size="6">VIP3</text></g><g class="booth" data-id="VIP4" tabindex="0" role="button" aria-label="VIP4"><rect x="333" y="272" width="19" height="18" rx="3"/><text x="342.5" y="281.0" font-size="6">VIP4</text></g>
+          </svg>
+          </div>
+        </div>
+
+        <aside class="min-w-0 rounded-3xl bg-white p-6 lg:col-span-2" aria-live="polite">
+          <!-- state 1: nothing selected -->
+          <div id="panel-empty">
+            <p class="text-2xl font-black" data-en="Choose a booth">اختر بوث</p>
+            <p class="mt-2 text-gd-muted" data-en="Tap any coloured booth on the map, or pick one from the list.">اضغط على أي بوث ملوّن في المخطط، أو اختره من القائمة.</p>
+            <label for="booth-select" class="mt-6 block text-sm font-bold" data-en="Available booths">البوثات المتاحة</label>
+            <select id="booth-select" class="mt-2 w-full rounded-xl border border-gd-line bg-gd-paper px-4 py-3 font-bold"></select>
+          </div>
+
+          <!-- state 2: booking form -->
+          <form id="panel-form" hidden novalidate>
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="text-sm font-bold text-gd-pink" data-en="Selected booth">البوث المختار</p>
+                <p id="sel-id" class="ltr text-4xl font-black" data-align></p>
+                <p id="sel-tier" class="mt-1 text-gd-muted"></p>
+              </div>
+              <div class="text-end"><p id="sel-price" class="num text-3xl font-black"></p><p class="text-sm text-gd-muted" data-en="SAR / 14 days">ريال / 14 يوم</p></div>
+            </div>
+            <div class="mt-6 grid gap-4">
+              <div><label for="f-brand" class="text-sm font-bold" data-en="Brand name *">اسم البراند *</label><input id="f-brand" name="brand" required maxlength="80" autocomplete="organization" class="mt-1 w-full rounded-xl border border-gd-line bg-gd-paper px-4 py-3" /></div>
+              <div><label for="f-name" class="text-sm font-bold" data-en="Contact name *">اسم المسؤول *</label><input id="f-name" name="name" required maxlength="80" autocomplete="name" class="mt-1 w-full rounded-xl border border-gd-line bg-gd-paper px-4 py-3" /></div>
+              <div><label for="f-phone" class="text-sm font-bold" data-en="WhatsApp number *">رقم الواتساب *</label><input id="f-phone" name="phone" type="tel" required maxlength="20" autocomplete="tel" dir="ltr" placeholder="05XXXXXXXX" class="mt-1 w-full rounded-xl border border-gd-line bg-gd-paper px-4 py-3" /></div>
+              <div><label for="f-ig" class="text-sm font-bold" data-en="Instagram">حساب الانستقرام</label><input id="f-ig" name="instagram" maxlength="80" dir="ltr" placeholder="@brand" class="mt-1 w-full rounded-xl border border-gd-line bg-gd-paper px-4 py-3" /></div>
+              <div><label for="f-product" class="text-sm font-bold" data-en="Product type *">نوع المنتج *</label><input id="f-product" name="product" required maxlength="80" class="mt-1 w-full rounded-xl border border-gd-line bg-gd-paper px-4 py-3" /></div>
+              <div><label for="f-profile" class="text-sm font-bold" data-en="Brand profile link (Drive, PDF, website)">رابط بروفايل البراند (Drive، PDF، موقع)</label><input id="f-profile" name="profile" type="url" maxlength="300" dir="ltr" placeholder="https://" class="mt-1 w-full rounded-xl border border-gd-line bg-gd-paper px-4 py-3" /></div>
+            </div>
+            <p id="form-error" class="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm font-bold text-red-700" hidden></p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <button id="submit-btn" type="submit" class="rounded-full bg-gd-pink px-8 py-4 font-extrabold text-white transition hover:bg-gd-purple disabled:opacity-60" data-en="Send booking request">أرسل طلب الحجز</button>
+              <button id="change-btn" type="button" class="rounded-full border-2 border-gd-line px-6 py-4 font-bold transition hover:border-gd-purple" data-en="Change booth">غيّر البوث</button>
+            </div>
+            <p class="mt-4 text-xs leading-relaxed text-gd-muted" data-en="This is a provisional booking. Our team will contact you on WhatsApp to confirm and complete payment.">الحجز مبدئي، وبيتواصل معك فريقنا على الواتساب لتأكيده وإكمال الدفع.</p>
+          </form>
+
+          <!-- state 3: done -->
+          <div id="panel-done" hidden>
+            <div class="flex h-14 w-14 items-center justify-center rounded-full bg-green-100 text-green-700"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg></div>
+            <p class="mt-4 text-3xl font-black" data-en="Request received!">وصلنا طلبك!</p>
+            <p id="done-text" class="mt-2 text-gd-muted"></p>
+            <a id="done-wa" href="#" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-3 rounded-full bg-[#25D366] px-7 py-4 font-extrabold text-white transition hover:bg-[#128C7E]">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex:none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <span data-en="Send summary on WhatsApp">أرسل الملخص على الواتساب</span>
+            </a>
+            <button id="again-btn" type="button" class="mt-4 block font-bold text-gd-pink underline" data-en="Book another booth">احجز بوث ثاني</button>
+          </div>
+        </aside>
+      </div>
+
+      <p class="mt-8 text-sm text-gd-muted"><span data-en="Questions?">استفسارات؟</span> <a href="https://wa.me/966599160989" target="_blank" rel="noopener" class="ltr font-bold text-gd-purple underline">+966 59 916 0989</a></p>
     </div>
   </section>
 
@@ -285,6 +360,7 @@
         btn.textContent = en ? 'ع' : 'EN';
         document.title = en ? 'Marsa Event | Al Khobar City Walk' : 'ايفنت مرسى | Marsa Event — الخبر سيتي ووك';
         try { localStorage.setItem('marsa-lang', lang); } catch (e) {}
+        document.dispatchEvent(new Event('langchange'));
       }
       var start = 'ar';
       try { start = localStorage.getItem('marsa-lang') || 'ar'; } catch (e) {}
@@ -293,13 +369,123 @@
       btn.addEventListener('click', function () { apply(document.documentElement.lang === 'en' ? 'ar' : 'en'); });
     })();
 
-    // ---- copy email ----
-    document.getElementById('copy-email').addEventListener('click', function () {
-      var btn = this, el = document.getElementById('gd-email'), label = btn.innerHTML;
-      function done() { btn.textContent = document.documentElement.lang === 'en' ? 'Copied' : 'تم النسخ'; setTimeout(function () { btn.innerHTML = label; }, 1800); }
-      function fallback() { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
-      try { navigator.clipboard.writeText(el.textContent.trim()).then(done, fallback); } catch (e) { fallback(); }
-    });
+  </script>
+  <script>
+    // ================= Booth booking =================
+    // Paste the Google Apps Script "Web app" URL here (see SETUP.md). Leave empty to fall back to WhatsApp.
+    var API_URL = '';
+    var WHATSAPP = '966599160989';
+
+    (function () {
+      var TOTAL = 41, FIRST_TIER = ['Y1', 'Y25', 'Z1', 'Z7'];
+      var map = document.getElementById('booth-map');
+      var nodes = Array.prototype.slice.call(map.querySelectorAll('.booth'));
+      var status = {};            // id -> 'pending' | 'booked'
+      var selected = null;
+      var $ = function (id) { return document.getElementById(id); };
+      var en = function () { return document.documentElement.lang === 'en'; };
+      var t = function (ar, eng) { return en() ? eng : ar; };
+      var fmt = function (n) { return n.toLocaleString('en-US'); };
+
+      function info(id) {
+        if (/^VIP/.test(id)) return { tier: 'vip', price: 8500, color: '#FFC303', text: '#2E0275' };
+        if (FIRST_TIER.indexOf(id) !== -1) return { tier: 'first', price: 7500, color: '#FF3E7F', text: '#fff' };
+        return { tier: 'std', price: 5000, color: '#8B00FF', text: '#fff' };
+      }
+      function tierName(id) {
+        var k = info(id).tier;
+        return k === 'vip' ? t('بوث VIP المميز', 'VIP premium booth') : k === 'first' ? t('الفئة الأولى', 'First tier') : t('الفئة القياسية', 'Standard tier');
+      }
+      function sortKey(id) { var m = id.match(/^([A-Z]+)(\d+)$/); return ({ VIP: 0, Z: 1, Y: 2 })[m[1]] * 100 + (+m[2]); }
+
+      function render() {
+        nodes.forEach(function (g) {
+          var id = g.getAttribute('data-id'), i = info(id), s = status[id];
+          g.style.setProperty('--c', i.color); g.style.setProperty('--t', i.text);
+          g.classList.toggle('is-pending', s === 'pending');
+          g.classList.toggle('is-booked', s === 'booked');
+          g.classList.toggle('is-selected', id === selected);
+          g.setAttribute('aria-label', id + ' — ' + (s === 'booked' ? t('محجوز', 'booked') : s === 'pending' ? t('قيد المراجعة', 'under review') : tierName(id) + ' ' + fmt(i.price)));
+        });
+        var free = nodes.filter(function (g) { return !status[g.getAttribute('data-id')]; }).map(function (g) { return g.getAttribute('data-id'); }).sort(function (a, b) { return sortKey(a) - sortKey(b); });
+        $('left-label').innerHTML = t('متبقي <b class="num text-gd-gold">' + free.length + '</b> من ' + TOTAL + ' بوث', '<b class="num text-gd-gold">' + free.length + '</b> of ' + TOTAL + ' booths left');
+        var sel = $('booth-select');
+        sel.innerHTML = '<option value="">' + t('— اختر —', '— Select —') + '</option>' + free.map(function (id) {
+          return '<option value="' + id + '">' + id + ' · ' + tierName(id) + ' · ' + fmt(info(id).price) + ' ' + t('ريال', 'SAR') + '</option>';
+        }).join('');
+        var lbl = map.querySelector('[data-en-svg]'); if (lbl) { if (!lbl.dataset.ar) lbl.dataset.ar = lbl.textContent; lbl.textContent = en() ? lbl.getAttribute('data-en-svg') : lbl.dataset.ar; }
+        if (selected) { $('sel-id').textContent = selected; $('sel-tier').textContent = tierName(selected); $('sel-price').textContent = fmt(info(selected).price); }
+      }
+
+      function show(which) { ['panel-empty', 'panel-form', 'panel-done'].forEach(function (p) { $(p).hidden = p !== which; }); }
+
+      function choose(id) {
+        if (!id) return;
+        if (status[id]) {
+          flash(id, status[id] === 'booked' ? t('هذا البوث محجوز، اختر غيره.', 'This booth is booked — please pick another.') : t('هذا البوث قيد المراجعة لعميل ثاني، اختر غيره.', 'This booth is under review for another brand — please pick another.'));
+          return;
+        }
+        selected = id; $('form-error').hidden = true; render(); show('panel-form');
+        if (window.innerWidth < 1024) $('panel-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      function flash(id, msg) { selected = null; render(); show('panel-empty'); var e = $('form-error'); e.textContent = msg; alertBox(msg); }
+      function alertBox(msg) {
+        var box = $('panel-empty'), n = box.querySelector('.flash'); if (!n) { n = document.createElement('p'); n.className = 'flash mt-4 rounded-xl bg-amber-50 px-4 py-3 text-sm font-bold text-amber-800'; box.appendChild(n); }
+        n.textContent = msg;
+      }
+
+      nodes.forEach(function (g) {
+        g.addEventListener('click', function () { choose(g.getAttribute('data-id')); });
+        g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(g.getAttribute('data-id')); } });
+      });
+      $('booth-select').addEventListener('change', function () { choose(this.value); });
+      $('change-btn').addEventListener('click', function () { selected = null; render(); show('panel-empty'); });
+      $('again-btn').addEventListener('click', function () { selected = null; $('panel-form').reset(); render(); show('panel-empty'); });
+
+      function summary(d) {
+        return 'طلب حجز بوث — ايفنت مرسى\n' +
+          'البوث: ' + d.booth + ' (' + tierName(d.booth) + ' – ' + fmt(info(d.booth).price) + ' ريال)\n' +
+          'البراند: ' + d.brand + '\nالاسم: ' + d.name + '\nالواتساب: ' + d.phone +
+          (d.instagram ? '\nانستقرام: ' + d.instagram : '') + '\nنوع المنتج: ' + d.product +
+          (d.profile ? '\nالبروفايل: ' + d.profile : '');
+      }
+      function done(d, saved) {
+        $('done-text').textContent = saved
+          ? t('طلبك للبوث ' + d.booth + ' مسجّل وقيد المراجعة. بيتواصل معك فريقنا على الواتساب لتأكيده.', 'Your request for booth ' + d.booth + ' is recorded and under review. Our team will contact you on WhatsApp to confirm.')
+          : t('كمّل إرسال طلبك للبوث ' + d.booth + ' على الواتساب عشان يوصلنا.', 'Finish sending your request for booth ' + d.booth + ' on WhatsApp so it reaches us.');
+        $('done-wa').href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(summary(d));
+        show('panel-done');
+      }
+
+      $('panel-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var f = this, err = $('form-error');
+        var d = { booth: selected, brand: f.brand.value.trim(), name: f.name.value.trim(), phone: f.phone.value.trim(), instagram: f.instagram.value.trim(), product: f.product.value.trim(), profile: f.profile.value.trim() };
+        if (!d.brand || !d.name || !d.phone || !d.product) { err.textContent = t('عبّ الحقول اللي عليها نجمة *', 'Please fill in the fields marked *'); err.hidden = false; return; }
+        if (!/^[+0-9\s-]{8,20}$/.test(d.phone)) { err.textContent = t('اكتب رقم واتساب صحيح', 'Please enter a valid WhatsApp number'); err.hidden = false; return; }
+        err.hidden = true;
+        if (!API_URL) { done(d, false); return; }   // no sheet yet -> WhatsApp only
+        var btn = $('submit-btn'); btn.disabled = true; btn.textContent = t('جاري الإرسال…', 'Sending…');
+        fetch(API_URL, { method: 'POST', body: JSON.stringify(d) })
+          .then(function (r) { return r.json(); })
+          .then(function (res) {
+            if (res.ok) { status[d.booth] = 'pending'; selected = null; render(); done(d, true); }
+            else if (res.error === 'taken') { if (res.booths) status = res.booths; flash(d.booth, t('للأسف البوث ' + d.booth + ' انحجز قبل شوي، اختر غيره.', 'Sorry, booth ' + d.booth + ' was just taken — please pick another.')); }
+            else { err.textContent = t('صار خطأ، حاول مرة ثانية أو راسلنا واتساب.', 'Something went wrong — try again or message us on WhatsApp.'); err.hidden = false; }
+          })
+          .catch(function () { done(d, false); })
+          .finally(function () { btn.disabled = false; btn.textContent = t('أرسل طلب الحجز', 'Send booking request'); });
+      });
+
+      var sc = $('map-scroll');
+      function centreMap() { if (sc.scrollWidth > sc.clientWidth) sc.scrollLeft = sc.scrollWidth * ((450 - 300) / 490) - sc.clientWidth / 2; }
+      window.addEventListener('load', centreMap); centreMap();
+      document.addEventListener('langchange', render);
+      render();
+      if (API_URL) {
+        fetch(API_URL).then(function (r) { return r.json(); }).then(function (res) { if (res && res.booths) { status = res.booths; render(); } }).catch(function () {});
+      }
+    })();
   </script>
 </body>
 </html>
